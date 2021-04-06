@@ -1,0 +1,19 @@
+apiVersion: skaffold/v1beta12
+kind: Config
+build:
+  artifacts:
+  - image: liatrio-backstage
+    context: .
+deploy:
+  helm:
+    flags:
+    releases:
+    - name: liatrio-backstage
+      namespace: liatrio-backstage-staging
+      chartPath: charts/backstage
+      values:
+        image.repository: liatrio-backstage
+profiles:
+  - name: local
+    activation:
+      - kubeContext: docker-desktop

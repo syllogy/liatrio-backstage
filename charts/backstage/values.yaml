@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: liatrio-backstage
-  pullPolicy: Never
+  repository: harbor.toolchain.lead.prod.liatr.io/backstage/liatrio-backstage
+  pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""

@@ -1,18 +1,18 @@
 app:
   title: Liatrio Backstage App
-  baseUrl: http://localhost:7000
+  baseUrl: https://backstage.staging.apps.lead.prod.liatr.io
 
 organization:
   name: Liatrio
 
 backend:
-  baseUrl: http://localhost:7000
+  baseUrl: https://backstage.staging.apps.lead.prod.liatr.io
   listen:
     port: 7000
   csp:
     connect-src: ["'self'", 'http:', 'https:']
   cors:
-    origin: http://localhost:7000
+    origin: https://backstage.staging.apps.lead.prod.liatr.io
     methods: [GET, POST, PUT, DELETE]
     credentials: true
   database:
@@ -64,4 +64,7 @@ catalog:
     # Backstage example components
     - type: url
       target: https://github.com/liatrio/halp-1000/blob/main/catalog.yaml
+    - type: url
+      target: https://github.com/liatrio/halp-1000/blob/main/catalog.yaml
+      target: https://github.com/liatrio/gratibot/blob/main/catalog.yaml
 

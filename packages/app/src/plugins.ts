@@ -6,4 +6,6 @@ export { plugin as ScaffolderPlugin } from '@backstage/plugin-scaffolder';
 export { plugin as TechDocsPlugin } from '@backstage/plugin-techdocs';
 export { plugin as TechRadar } from '@backstage/plugin-tech-radar';
 export { plugin as UserSettings } from '@backstage/plugin-user-settings';
+export { plugin as GithubPullRequests } from '@roadiehq/backstage-plugin-github-pull-requests';
+export { plugin as GitHubInsights } from '@roadiehq/backstage-plugin-github-insights';
 

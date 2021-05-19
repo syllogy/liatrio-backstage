@@ -9,13 +9,13 @@ image:
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
+nameOverride: ''
+fullnameOverride: ''
 
 serviceAccount:
   create: false
   annotations: {}
-  name: ""
+  name: ''
 
 podAnnotations: {}
 
@@ -32,7 +32,13 @@ ingress:
   annotations: {}
   tls: []
 
-resources: {}
+resources:
+  limits:
+    cpu: 250m
+    memory: 500Mi
+  requests:
+    cpu: 500m
+    memory: 250Mi
 
 autoscaling:
   enabled: false

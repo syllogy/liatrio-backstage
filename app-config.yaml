@@ -71,4 +71,6 @@ catalog:
       target: https://github.com/liatrio/gratibot/blob/main/catalog.yaml
     - type: url
       target: https://github.com/liatrio/devops-bootcamp/blob/master/catalog-info.yaml
+    - type: url
+      target: https://github.com/liatrio/envelope-game/blob/master/catalog-info.yaml
 

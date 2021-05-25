@@ -1,0 +1,73 @@
+app:
+  title: Liatrio Backstage App
+  baseUrl: https://backstage.prod.apps.lead.prod.liatr.io
+
+organization:
+  name: Liatrio
+
+backend:
+  baseUrl: https://backstage.prod.apps.lead.prod.liatr.io
+  listen:
+    port: 7000
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  cors:
+    origin: https://backstage.prod.apps.lead.prod.liatr.io
+    methods: [GET, POST, PUT, DELETE]
+    credentials: true
+  database:
+    client: sqlite3
+    connection: ':memory:'
+  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
+
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+    ### Example for how to add your GitHub Enterprise instance using the API:
+    # - host: ghe.example.net
+    #   apiBaseUrl: https://ghe.example.net/api/v3
+    #   token:
+    #     $env: GHE_TOKEN
+
+# Reference documentation http://backstage.io/docs/features/techdocs/configuration
+# Note: After experimenting with basic setup, use CI/CD to generate docs
+# and an external cloud storage when deploying TechDocs for production use-case.
+# https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generators:
+    techdocs: 'docker' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+
+auth:
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+
+scaffolder:
+  github:
+    token:
+      $env: GITHUB_TOKEN
+    visibility: public # or 'internal' or 'private'
+
+catalog:
+  rules:
+    - allow: [Component, API, Group, User, Template, Location]
+  locations:
+    # Backstage example components
+    - type: url
+      target: https://github.com/liatrio/halp-1000/blob/main/catalog.yaml
+    - type: url
+      target: https://github.com/liatrio/gratibot/blob/main/catalog.yaml
+    - type: url
+      target: https://github.com/liatrio/devops-bootcamp/blob/master/catalog-info.yaml
+    - type: url
+      target: https://github.com/gesparza3/springtrader-marketsummary/blob/master/catalog-info.yaml
+    - type: url
+      target: https://github.com/liatrio/envelope-game/blob/master/catalog-info.yaml
+

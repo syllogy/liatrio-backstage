@@ -6,7 +6,6 @@ pipeline {
   }
 
   stages {
-    /// [build]
     stage('Build') {
       agent {
         label "lead-toolchain-skaffold"
@@ -17,7 +16,6 @@ pipeline {
         }
       }
     }
-    /// [build]
 
     stage('Publish Image') {
       agent {
@@ -33,7 +31,6 @@ pipeline {
       }
     }
 
-    /// [stage]
     stage("Deploy to Staging") {
       agent {
         label "lead-toolchain-skaffold"
@@ -59,6 +56,47 @@ pipeline {
         }
       }
     }
-    /// [stage]
+
+    stage ('Manual Ready Check') {
+      agent none
+      when {
+        branch 'master'
+      }
+      options {
+        timeout(time: 30, unit: 'MINUTES')
+      }
+      input {
+        message 'Deploy to Production?'
+      }
+      steps {
+        echo "Deploying"
+      }
+    }
+
+    stage("Deploy to Production") {
+      agent {
+        label "lead-toolchain-skaffold"
+      }
+      when {
+          branch 'main'
+      }
+      environment {
+        ISTIO_DOMAIN = "${env.productionDomain}"
+        PRODUCT_NAME = "${env.product}"
+        NAMESPACE   = "${env.productionNamespace}"
+        ENVIRONMENT = "production"
+      }
+      steps {
+        container('skaffold') {
+          sh '''
+            helm upgrade --install liatrio-backstage charts/backstage/ -n ${NAMESPACE} \
+            --set image.repository=${DOCKER_DEFAULT_REPO}/liatrio-backstage \
+            --set image.tag=${DOCKER_TAG} \
+            --set istioDomain=${ISTIO_DOMAIN}
+          '''
+          stageMessage "Successfully deployed to production!"
+        }
+      }
+    }
   }
 }

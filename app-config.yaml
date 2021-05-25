@@ -42,7 +42,7 @@ proxy:
 techdocs:
   builder: 'local' # Alternatives - 'external'
   generators:
-    techdocs: 'docker' # Alternatives - 'local'
+    techdocs: 'local' # Alternatives - 'local'
   publisher:
     type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 

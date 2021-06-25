@@ -31,7 +31,7 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/ingress.class: internal-nginx
-    nginx.ingress.kubernetes.io/force-ssl-redirect: true
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
   tls: []
   hosts:
   - host: backstage-staging.internal.lead.prod.liatr.io

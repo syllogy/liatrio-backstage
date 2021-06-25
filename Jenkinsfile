@@ -52,8 +52,7 @@ pipeline {
           sh '''
             helm upgrade --install liatrio-backstage charts/backstage/ -n ${NAMESPACE} \
             --set image.repository=${DOCKER_DEFAULT_REPO}/liatrio-backstage \
-            --set image.tag=${DOCKER_TAG} \
-            --set istioDomain=${ISTIO_DOMAIN}
+            --set image.tag=${DOCKER_TAG}
           '''
           stageMessage "Successfully deployed to staging!"
         }

@@ -1,18 +1,18 @@
 app:
   title: Liatrio Backstage App
-  baseUrl: https://backstage.staging.apps.lead.prod.liatr.io
+  baseUrl: https://backstage-staging.internal.lead.prod.liatr.io
 
 organization:
   name: Liatrio
 
 backend:
-  baseUrl: https://backstage.staging.apps.lead.prod.liatr.io
+  baseUrl: https://liatrio-backstage.backstage-staging.svc.cluster.local
   listen:
     port: 7000
   csp:
     connect-src: ["'self'", 'http:', 'https:']
   cors:
-    origin: https://backstage.staging.apps.lead.prod.liatr.io
+    origin: https://liatrio-backstage.backstage-staging.svc.cluster.local
     methods: [GET, POST, PUT, DELETE]
     credentials: true
   database:

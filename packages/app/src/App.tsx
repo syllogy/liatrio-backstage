@@ -21,9 +21,48 @@ import { UserSettingsPage } from '@backstage/plugin-user-settings';
 import { apis } from './apis';
 import { entityPage } from './components/catalog/EntityPage';
 import { Root } from './components/Root';
+import { createTheme, lightTheme, darkTheme } from '@backstage/theme';
 
 const app = createApp({
   apis,
+  themes: [
+    {
+      id: 'light-theme',
+      title: 'Light Theme',
+      variant: 'light',
+      theme: createTheme({
+        palette: {
+          ...lightTheme.palette,
+          navigation: {
+            background: '#171717',
+            indicator: '#9BF0E1',
+            color: '#24AE1D',
+            selectedColor: '#FFF',
+          },
+        },
+        fontFamily: 'Open Sans, sans-serif',
+        defaultPageTheme: 'home',
+      }),
+    },
+    {
+      id: 'dark-theme',
+      title: 'Dark Theme',
+      variant: 'dark',
+      theme: createTheme({
+        palette: {
+          ...darkTheme.palette,
+          navigation: {
+            background: '#424242',
+            indicator: '#9BF0E1',
+            color: '#24AE1D',
+            selectedColor: '#FFF',
+          },
+        },
+        fontFamily: 'Open Sans, sans-serif',
+        defaultPageTheme: 'home',
+      }),
+    },
+  ],
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,

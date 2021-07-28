@@ -1,0 +1,137 @@
+{
+  "entries": [{
+    "timeline": [{
+      "ringId": "use",
+      "date": "2021-07-25"
+    }],
+    "url": "#",
+    "key": "javascript",
+    "id": "javascript",
+    "title": "JavaScript",
+    "quadrant": "languages",
+    "description": "Javascript is an easy to pick up and use language, with useful libraries and frameworks to support a variety of tasks. Use freely."
+  },
+  {
+    "timeline": [{
+      "ringId": "hold",
+      "date": "2021-07-25"
+    }],
+    "url": "#",
+    "key": "groovy",
+    "id": "groovy",
+    "title": "Groovy",
+    "quadrant": "languages",
+    "description": "Groovy is the language of choice for work in Jenkins pipeline and library development. However outside of these use cases it isn't commonly used or well understood. For new projects, consider a better know language or, if it's required for CI/CD, consider a platform other than Jenkins."
+  },
+  {
+    "timeline": [{
+      "ringId": "use",
+      "date": "2021-07-21"
+    }],
+    "url": "#",
+    "key": "git",
+    "id": "git",
+    "title": "Git",
+    "quadrant": "tools",
+    "description": "Git is a popular version control system, which any functionality required for version control, while also providing the backbone for many different CI?CD tools and DevOps processes. Use freely."
+  },
+  {
+    "timeline": [{
+      "ringId": "hold",
+      "date": "2021-07-21"
+    }],
+    "url": "#",
+    "key": "botkit",
+    "id": "botkit",
+    "title": "Botkit",
+    "quadrant": "frameworks",
+    "description": "Botkit has poor documentation, and hasn't received an update in nearly a year. For new chat bots consider using a platform specific framework, such as Bolt for Slack."
+  },
+  {
+    "timeline": [{
+      "ringId": "trial",
+      "date": "2021-07-21"
+    }],
+    "url": "#",
+    "key": "backstage",
+    "id": "backstage",
+    "title": "Backstage",
+    "quadrant": "tools",
+    "description": "Backstage is an interesting tool for a development portal, but it's still early in development and many features are still in alpha. Use with caution."
+  },
+  {
+    "timeline": [{
+      "ringId": "use",
+      "date": "2021-07-21"
+    }],
+    "url": "#",
+    "key": "go",
+    "id": "go",
+    "title": "Go",
+    "quadrant": "languages",
+    "description": "Golang is a well understood and frequently used tool within Liatrio. Many projects exist as an example, and many people are able to help with problems that may arise. Use freely."
+  },
+  {
+    "timeline": [{
+      "ringId": "hold",
+      "date": "2021-07-21"
+    }],
+    "url": "#",
+    "key": "jenkins",
+    "id": "jenkins",
+    "title": "Jenkins",
+    "quadrant": "tools",
+    "description": "Jenkins is a heavily used CI/CD platform, and its design gives lots of flexibility. However,it shows its weaknesses in its tacked-on support for configuration as code, and its difficulty to get started with. For new projects, consider a more modern CI/CD system such as GitHub Actions."
+  },
+  {
+    "timeline": [{
+      "ringId": "avoid",
+      "date": "2021-07-21"
+    }],
+    "url": "#",
+    "key": "ecs",
+    "id": "ecs",
+    "title": "ECS",
+    "quadrant": "infrastructure",
+    "description": "Amazon Elastic Container Service (ECS) allows for managed container orchestration on AWS. Its features are similar to Kubernetes, while being less well documented and less frequently used. In addition, container workloads can instead be run on Kubernetes in AWS, without experiencing as much lock-in to the AWS Cloud. All projects should consider moving instead to EKS or another Kubernetes-based platform."
+  }
+  ],
+  "rings": [{
+    "id": "use",
+    "name": "USE",
+    "color": "#93c47d"
+  },
+  {
+    "id": "trial",
+    "name": "TRIAL",
+    "color": "#93d2c2"
+  },
+  {
+    "id": "hold",
+    "name": "HOLD",
+    "color": "#efafa9"
+  },
+  {
+    "id": "avoid",
+    "name": "AVOID",
+    "color": "#ff2b2b"
+  }
+  ],
+  "quadrants": [{
+    "id": "infrastructure",
+    "name": "Infrastructure"
+  },
+  {
+    "id": "tools",
+    "name": "Tools"
+  },
+  {
+    "id": "frameworks",
+    "name": "Frameworks"
+  },
+  {
+    "id": "languages",
+    "name": "Languages"
+  }
+  ]
+}

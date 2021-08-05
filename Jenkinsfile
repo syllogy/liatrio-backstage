@@ -1,5 +1,5 @@
 pipeline {
-  agent { label "minimal" }
+  agent { label 'minimal' }
 
   environment {
     DOCKER_TAG  = "0.1.0-${GIT_COMMIT[0..7]}"
@@ -9,11 +9,16 @@ pipeline {
     /// [build]
     stage('Build') {
       agent {
-        label "lead-toolchain-skaffold"
+        label 'lead-toolchain-skaffold'
       }
       steps {
         container('skaffold') {
-            sh "DOCKER_BUILDKIT=1 docker build --progress=plain -t ${DOCKER_DEFAULT_REPO}/liatrio-backstage:${DOCKER_TAG} ."
+            sh """
+              apk add yarn
+              yarn install --frozen-lockfile
+              yarn build
+              DOCKER_BUILDKIT=1 docker build --progress=plain -t ${DOCKER_DEFAULT_REPO}/liatrio-backstage:${DOCKER_TAG} .
+            """
         }
       }
     }
@@ -21,7 +26,7 @@ pipeline {
 
     stage('Publish Image') {
       agent {
-        label "lead-toolchain-skaffold"
+        label 'lead-toolchain-skaffold'
       }
       when {
         branch 'main'
@@ -34,9 +39,9 @@ pipeline {
     }
 
     /// [stage]
-    stage("Deploy to Staging") {
+    stage('Deploy to Staging') {
       agent {
-        label "lead-toolchain-skaffold"
+        label 'lead-toolchain-skaffold'
       }
       when {
           branch 'main'
@@ -45,7 +50,7 @@ pipeline {
         ISTIO_DOMAIN = "${env.stagingDomain}"
         PRODUCT_NAME = "${env.product}"
         NAMESPACE   = "${env.stagingNamespace}"
-        ENVIRONMENT = "staging"
+        ENVIRONMENT = 'staging'
       }
       steps {
         container('skaffold') {
@@ -54,10 +59,10 @@ pipeline {
             --set image.repository=${DOCKER_DEFAULT_REPO}/liatrio-backstage \
             --set image.tag=${DOCKER_TAG}
           '''
-          stageMessage "Successfully deployed to staging!"
+          stageMessage 'Successfully deployed to staging!'
         }
       }
     }
-    /// [stage]
+  /// [stage]
   }
 }

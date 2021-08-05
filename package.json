@@ -1,5 +1,5 @@
 {
-  "name": "root",
+  "name": "liatrio-backstage",
   "version": "1.0.0",
   "private": true,
   "engines": {
@@ -9,8 +9,9 @@
     "dev": "concurrently \"yarn start\" \"yarn start-backend\"",
     "start": "yarn workspace app start",
     "start-backend": "yarn workspace backend start",
-    "build": "tsc && lerna run build",
-    "build-image": "yarn workspace backend build-image",
+    "build": "tsc && lerna run build --stream --parallel",
+    "docker:build": "tsc && lerna run build --stream --parallel && docker build -t ${npm_package_name} .",
+    "docker:run": "docker run --env-file .env -p 7000:7000 ${npm_package_name} --config app-config.local.yaml",
     "tsc": "tsc",
     "tsc:full": "tsc --skipLibCheck false --incremental false",
     "clean": "backstage-cli clean && lerna run clean",
@@ -29,7 +30,7 @@
     ]
   },
   "devDependencies": {
-    "@backstage/cli": "^0.6.4",
+    "@backstage/cli": "^0.7.7",
     "@spotify/prettier-config": "^7.0.0",
     "concurrently": "^6.0.0",
     "lerna": "^4.0.0",

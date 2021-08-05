@@ -3,26 +3,35 @@ pipeline {
 
   environment {
     DOCKER_TAG  = "0.1.0-${GIT_COMMIT[0..7]}"
+    ALPINE_MIRROR = 'http://dl-cdn.alpinelinux.org/alpine'
   }
 
   stages {
-    /// [build]
-    stage('Build') {
+    stage('Build App') {
+      agent {
+        label 'minimal'
+      }
+      steps {
+        container('agent') {
+          sh '''
+            apk add nodejs yarn
+            yarn install --frozen-lockfile
+            yarn build
+          '''
+        }
+      }
+    }
+
+    stage('Build Image') {
       agent {
         label 'lead-toolchain-skaffold'
       }
       steps {
         container('skaffold') {
-            sh """
-              apk add yarn
-              yarn install --frozen-lockfile
-              yarn build
-              DOCKER_BUILDKIT=1 docker build --progress=plain -t ${DOCKER_DEFAULT_REPO}/liatrio-backstage:${DOCKER_TAG} .
-            """
+          sh "DOCKER_BUILDKIT=1 docker build --progress=plain -t ${DOCKER_DEFAULT_REPO}/liatrio-backstage:${DOCKER_TAG} ."
         }
       }
     }
-    /// [build]
 
     stage('Publish Image') {
       agent {
@@ -38,13 +47,12 @@ pipeline {
       }
     }
 
-    /// [stage]
     stage('Deploy to Staging') {
       agent {
         label 'lead-toolchain-skaffold'
       }
       when {
-          branch 'main'
+        branch 'main'
       }
       environment {
         ISTIO_DOMAIN = "${env.stagingDomain}"
@@ -55,14 +63,14 @@ pipeline {
       steps {
         container('skaffold') {
           sh '''
-            helm upgrade --install liatrio-backstage charts/backstage/ -n ${NAMESPACE} \
-            --set image.repository=${DOCKER_DEFAULT_REPO}/liatrio-backstage \
-            --set image.tag=${DOCKER_TAG}
+            helm upgrade --install liatrio-backstage charts/backstage/
+              -n ${NAMESPACE} \
+              --set image.repository=${DOCKER_DEFAULT_REPO}/liatrio-backstage \
+              --set image.tag=${DOCKER_TAG}
           '''
           stageMessage 'Successfully deployed to staging!'
         }
       }
     }
-  /// [stage]
   }
 }

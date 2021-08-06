@@ -8,23 +8,13 @@ Internal Liatrio Backstage Portal
 
 ## Environment Variables
 
-In order to configure Github Authentication you will need to create a [Github OAuth App](https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app).
-
-Set them on your local machine if running on host:
-
-```
-export AUTH_GITHUB_CLIENT_ID=<client_id>
-export AUTH_GITHUB_CLIENT_SECRET=<client_secret>
-```
-
 If using Docker, create an `.env` file with the following contents:
 
 > The Docker container will serve both frontend & backend so we will need to configure the url accordingly.
 
 ```
-AUTH_GITHUB_CLIENT_ID=<client_id>
-AUTH_GITHUB_CLIENT_SECRET=<client_secret>
 APP_CONFIG_app_baseUrl=http://localhost:7000
+APP_CONFIG_backend_baseUrl=http://localhost:7000
 APP_CONFIG_backend_cors_origin=http://localhost:7000
 ```
 

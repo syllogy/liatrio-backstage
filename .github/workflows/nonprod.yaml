@@ -1,0 +1,71 @@
+name: 'nonprod'
+on:
+  push:
+    branches:
+      - main
+      - ENG-2065-optimize-build
+    paths-ignore:
+      - 'README.md'
+      - 'catalog.yaml'
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/liatrio-backstage
+
+jobs:
+  build:
+    name: Build and Publish Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+
+      - name: Install build dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build bundle
+        run: yarn build
+
+      - name: Generate tag
+        id: tag
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME:${{ steps.tag.outputs.sha_short }} --label "runnumber=${GITHUB_RUN_ID}"
+        env:
+          DOCKER_BUILDKIT: 1
+
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        run: docker push $IMAGE_NAME:${{ steps.tag.outputs.sha_short }}
+    outputs:
+      docker_tag: ${{ steps.tag.outputs.sha_short }}
+
+  apply:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+    environment:
+      name: 'nonprod'
+    container: 'hashicorp/terraform:0.14.10'
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deploy Backstage to Nonprod
+        working-directory: tf
+        run: |
+          terraform init -backend-config=backends/nonprod.tf
+          terraform apply -auto-approve
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_TENANT_ID: '1b4a4fed-fed8-4823-a8a0-3d5cea83d122'
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_NONPROD_SUBSCRIPTION_ID }}
+          TF_VAR_acr_subscription_id: ${{ secrets.AZURE_NONPROD_SUBSCRIPTION_ID }}
+          TF_VAR_gratibot_image: '${{ env.IMAGE_NAME }}:${{ needs.build.outputs.docker_tag }}'
+          TF_VAR_environment: 'nonprod'
+          TF_VAR_backstage_hostname: 'https://liatrio-backstage-nonprod.azurewebsites.net'

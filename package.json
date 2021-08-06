@@ -11,7 +11,7 @@
     "start-backend": "yarn workspace backend start",
     "build": "tsc && lerna run build --stream --parallel",
     "docker:build": "tsc && lerna run build --stream --parallel && docker build -t ${npm_package_name} .",
-    "docker:run": "docker run --env-file .env -p 7000:7000 ${npm_package_name} --config app-config.local.yaml",
+    "docker:run": "docker run --env-file .env -p 7000:7000 ${npm_package_name}",
     "tsc": "tsc",
     "tsc:full": "tsc --skipLibCheck false --incremental false",
     "clean": "backstage-cli clean && lerna run clean",

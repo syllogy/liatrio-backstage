@@ -21,7 +21,7 @@ import { UserSettingsPage } from '@backstage/plugin-user-settings';
 import { apis } from './apis';
 import { entityPage } from './components/catalog/EntityPage';
 import { Root } from './components/Root';
-import { createTheme, lightTheme, darkTheme } from '@backstage/theme';
+import { createTheme, lightTheme, darkTheme, genPageTheme, shapes } from '@backstage/theme';
 
 const app = createApp({
   apis,
@@ -42,6 +42,17 @@ const app = createApp({
         },
         fontFamily: 'Open Sans, sans-serif',
         defaultPageTheme: 'home',
+        pageTheme: {
+          home: genPageTheme(['#fefefe'], shapes.wave),
+          documentation: genPageTheme(['#24AE1D'], shapes.wave2),
+          tool: genPageTheme(['#24AE1D'], shapes.round),
+          service: genPageTheme(['#24AE1D'], shapes.wave),
+          website: genPageTheme(['#24AE1D'], shapes.wave),
+          library: genPageTheme(['#24AE1D'], shapes.wave),
+          other: genPageTheme(['#24AE1D'], shapes.wave),
+          app: genPageTheme(['#24AE1D'], shapes.wave),
+          apis: genPageTheme(['#24AE1D'], shapes.wave),
+        }
       }),
     },
     {
@@ -53,13 +64,28 @@ const app = createApp({
           ...darkTheme.palette,
           navigation: {
             background: '#424242',
-            indicator: '#9BF0E1',
+            indicator: '#89DF00',
             color: '#24AE1D',
-            selectedColor: '#FFF',
+            selectedColor: '#89DF00',
+          },
+          primary: {
+            main: '#24AE1D',
+            dark: '#89DF00',
           },
         },
         fontFamily: 'Open Sans, sans-serif',
         defaultPageTheme: 'home',
+        pageTheme: {
+          home: genPageTheme(['#262626'], shapes.wave),
+          documentation: genPageTheme(['#262626'], shapes.wave2),
+          tool: genPageTheme(['#262626'], shapes.round),
+          service: genPageTheme(['#262626'], shapes.wave),
+          website: genPageTheme(['#262626'], shapes.wave),
+          library: genPageTheme(['#262626'], shapes.wave),
+          other: genPageTheme(['#262626'], shapes.wave),
+          app: genPageTheme(['#262626'], shapes.wave),
+          apis: genPageTheme(['#262626'], shapes.wave),
+        },
       }),
     },
   ],

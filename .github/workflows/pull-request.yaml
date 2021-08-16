@@ -26,12 +26,10 @@ jobs:
       - name: Build bundle
         run: yarn build
 
-      - name: Generate tag
-        id: tag
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME:${{ steps.tag.outputs.sha_short }} --label "runnumber=${GITHUB_RUN_ID}"
+        env:
+          DOCKER_BUILDKIT: 1
     outputs:
       docker_tag: ${{ steps.tag.outputs.sha_short }}
   fmt:

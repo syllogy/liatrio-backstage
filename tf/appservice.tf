@@ -33,5 +33,6 @@ resource "azurerm_app_service" "liatrio_backstage_app_service" {
     "APP_CONFIG_app_baseUrl"         = var.backstage_hostname
     "APP_CONFIG_backend_baseUrl"     = var.backstage_hostname
     "APP_CONFIG_backend_cors_origin" = var.backstage_hostname
+    "WEBSITES_PORT" = var.backstage_port
   }
 }

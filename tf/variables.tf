@@ -49,3 +49,8 @@ variable "backstage_hostname" {
   type        = string
 }
 
+variable "backstage_port" {
+  description = "Port for Backstage Instance"
+  type        = string
+  default     = "7000"
+}

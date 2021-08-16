@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - ENG-2065-optimize-build
     paths-ignore:
       - 'README.md'
       - 'catalog.yaml'
